@@ -1,46 +1,45 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAccount } from 'wagmi';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, DocumentData } from 'firebase/firestore';
 import db from '../data/firebase/firebaseConfig.js'; 
 
-export function UserProfile() {
-  const { address } = useAccount();
-  const { userAddress } = useParams<{ userAddress: string }>();
-  const profileAddress = userAddress || address;
-
-  const [username, setUsername] = useState('');
+const UserProfile = () => {
+  const { username } = useParams();
+  const [userData, setUserData] = useState<DocumentData | null>(null);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (profileAddress) {
-        const docRef = doc(db, "userProfiles", profileAddress);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          setUsername(docSnap.data().username); // Assuming the profile has a username field
+    const fetchUserData = async () => {
+      if (username) {
+        // Adjust the query to look for the username field
+        const usersRef = collection(db, 'userProfiles');
+        const q = query(usersRef, where("username", "==", username));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          // Assuming username is unique, take the first document found
+          const userDoc = querySnapshot.docs[0];
+          setUserData(userDoc.data());
         } else {
-          console.log("No such profile!");
-          // Here you could also initialize a profile in Firestore if one doesn't exist
-          await setDoc(docRef, { username: "New User" }); // Example initialization
+          console.log("No such user!");
         }
       }
     };
 
-    fetchUserProfile();
-  }, [profileAddress]);
+    fetchUserData();
+  }, [username]);
+  
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <>
-      <Test>Username: {username || 'Loading...'}</Test>
-    </>
+    <div>
+      <h1>{userData.username}'s Profile</h1>
+      {/* Display other user data */}
+    </div>
   );
-}
+};
 
-
-// styles
-
-const Test = styled.h2`
-
-`
+export default UserProfile;

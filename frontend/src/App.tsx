@@ -1,19 +1,33 @@
+import { useState, useEffect } from 'react';
+import { useWallet } from './shared/components/walletContext';
 import { BrowserRouter as Router } from "react-router-dom";
+import { WalletProvider } from "./shared/components/walletContext";
 import { Web3Provider } from "./web3/web3Config";
 
 import { Navbar } from "./pages/components/Navbar";
+import UsernameModal from "./shared/components/usernameModal";
 
 import { PageRoutes } from "./pages";
 
+// This is your main App component that sets up providers
 function App() {
   return (
+    <Router>
+      <Web3Provider>
+        <WalletProvider>
+          <AppContent />
+        </WalletProvider>
+      </Web3Provider>
+    </Router>
+  );
+}
+
+// This component is responsible for rendering the app content and using the useWallet hook
+function AppContent() {
+  return (
     <>
-      <Router>
-        <Web3Provider>
-          <Navbar/>
-          <PageRoutes />
-        </Web3Provider>
-      </Router>
+      <Navbar />
+      <PageRoutes />
     </>
   );
 }

@@ -23,7 +23,6 @@ const config = defaultWagmiConfig({
   chains,
   projectId,
   metadata,
-  enableEmail: true
 });
 
 createWeb3Modal({

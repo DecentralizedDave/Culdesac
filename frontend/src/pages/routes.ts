@@ -1,5 +1,6 @@
 export const ROUTES = {
     home: '/',
     community: '/community',
-    profile: '/:userAddress'
+    myProfile: '/profile', 
+    userProfile: '/:username'
 }

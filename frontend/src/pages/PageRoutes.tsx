@@ -6,7 +6,8 @@ import { ROUTES } from "./routes";
 // pages
 import { HomePage } from "./HomePage";
 import { CommunityProfile } from "./CommunityProfile";
-import { UserProfile } from "./UserProfile";
+import MyProfile from "./MyProfile";
+import UserProfile from "./UserProfile";
 
 export function PageRoutes() {
     return (
@@ -14,7 +15,8 @@ export function PageRoutes() {
         <Routes>
             <Route path={ROUTES.home} element={<HomePage />} />
             <Route path={ROUTES.community} element={<CommunityProfile />} />
-            <Route path={ROUTES.profile} element={<UserProfile />} />
+            <Route path={ROUTES.myProfile} element={<MyProfile />} />
+            <Route path={ROUTES.userProfile} element={<UserProfile />} />
             <Route path='/*' element={<HomePage />} />
         </Routes>
         </>
