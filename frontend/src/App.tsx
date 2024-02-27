@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useWallet } from './shared/components/walletContext';
 import { BrowserRouter as Router } from "react-router-dom";
 import { WalletProvider } from "./shared/components/walletContext";
 import { Web3Provider } from "./web3/web3Config";
 
 import { Navbar } from "./pages/components/Navbar";
-import UsernameModal from "./shared/components/usernameModal";
 
 import { PageRoutes } from "./pages";
 

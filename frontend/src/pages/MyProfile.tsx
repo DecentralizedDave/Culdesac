@@ -1,9 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWallet } from '../shared/components/walletContext';
-import { doc, getDoc } from 'firebase/firestore';
-import db from '../data/firebase/firebaseConfig.js'; 
-import { useAccount } from 'wagmi';
 
 const MyProfile = () => {
   const { isConnected } = useWallet();
@@ -17,7 +14,7 @@ const MyProfile = () => {
 
   return (
     <div>
-      {/* Profile content goes here */}
+      <h2>My profile</h2>
     </div>
   );
 };
