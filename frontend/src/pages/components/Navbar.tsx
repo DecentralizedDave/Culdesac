@@ -6,6 +6,7 @@ import { useAccount } from "wagmi";
 export function Navbar() {
   const { isConnected } = useAccount();
   return (
+    <MainContainer>
     <Head>
       <Container>
         <Link to="/">
@@ -21,6 +22,7 @@ export function Navbar() {
         </div>
       </Container>
     </Head>
+    </MainContainer>
   );
 }
 
@@ -51,3 +53,16 @@ const ProfilePic = styled.div`
   margin-left: 15px;
   cursor: pointer;
 `;
+
+const MainContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+max-width: 800px;
+margin: 0 auto;
+padding: 10px;
+
+@media (max-width: 1200px) {
+  padding: 0 15px;
+}
+`
