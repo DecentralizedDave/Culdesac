@@ -11,14 +11,17 @@
   },
   "dependencies": {
     "@firebase/firestore": "^4.4.2",
+    "@moralisweb3/common-evm-utils": "^2.25.0",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
     "@tanstack/react-query": "^5.24.1",
     "@web3modal/wagmi": "^4.0.10",
     "firebase": "^10.8.0",
+    "moralis": "^2.25.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
+    "react-toastify": "^10.0.4",
     "styled-components": "^6.1.8",
     "viem": "^2.7.14",
     "wagmi": "^2.5.7"

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAccount } from 'wagmi'; // Import useAccount from wagmi
+import { useAccount } from 'wagmi'; 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { doc, getDoc, DocumentData } from 'firebase/firestore';
 import db from '../data/firebase/firebaseConfig';
 import styled from 'styled-components';
@@ -16,6 +18,7 @@ const MyProfile = () => {
   const { address, isConnected } = useAccount();
   const [userData, setUserData] = useState<DocumentData | null>(null);
   const [editMode, setEditMode] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   useEffect(() => {
     if (!isConnected) {
@@ -32,10 +35,16 @@ const MyProfile = () => {
       };
       fetchUserData();
     }
-  }, [isConnected, address, navigate]);
+  }, [isConnected, address, navigate, refreshTrigger]);
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
+  };
+
+  const onProfileUpdate = () => {
+    toast.success("Profile updated successfully!"); // Show success toast
+    setEditMode(false); // Close the modal
+    setRefreshTrigger(!refreshTrigger); // Trigger a refresh
   };
 
   const formatAddress = (address: string) => {
@@ -47,10 +56,11 @@ const MyProfile = () => {
   }
 
   return (
+    <>
     <MainContainer>
       <EditButton onClick={toggleEditMode}>Edit Profile</EditButton>
       {editMode && (
-        <EditProfileModal isOpen={editMode} onClose={toggleEditMode} address={address} userData={userData} />
+        <EditProfileModal isOpen={editMode} onClose={toggleEditMode} address={address} userData={userData} onProfileUpdate={onProfileUpdate} />
       )}
       <BannerDiv>
         <img src={userData.bannerimg} alt="Banner" />
@@ -82,10 +92,11 @@ const MyProfile = () => {
           <span>{userData.address ? formatAddress(userData.address) : 'Loading...'}</span>
           <p>{userData.bio}</p>
         </UserInfo>
-        
         </InfoContainer>
       </TopContainer>
     </MainContainer>
+    <ToastContainer position="bottom-right" />
+    </>
   );
 };
 
