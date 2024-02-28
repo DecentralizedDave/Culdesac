@@ -13,9 +13,8 @@ import db from "../data/firebase/firebaseConfig";
 import MainContainer from "../shared/components/MainContainer";
 
 // icons
-import XIcon from "@mui/icons-material/X";
-import Instagram from "@mui/icons-material/Instagram";
-import Telegram from "@mui/icons-material/Telegram";
+import {X, Telegram, Instagram} from "@mui/icons-material";
+
 // import Roof from "../assets/rooftest.svg"
 
 const UserProfile = () => {
@@ -65,7 +64,7 @@ const UserProfile = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <XIcon sx={{ fontSize: 25 }} />
+            <X />
           </a>
           <a
             href="https://instagram.com/yourusername"

@@ -8,9 +8,7 @@ import styled from 'styled-components';
 import MainContainer from '../shared/components/MainContainer';
 import EditProfileModal from '../shared/components/editProfile';
 
-import XIcon from "@mui/icons-material/X";
-import Instagram from "@mui/icons-material/Instagram";
-import Telegram from "@mui/icons-material/Telegram";
+import {X, Telegram, Instagram} from "@mui/icons-material";
 
 
 const MyProfile = () => {
@@ -59,7 +57,7 @@ const MyProfile = () => {
         <SocialMediaIcons>
           {userData.xusername && (
             <a href={`https://x.com/${userData.xusername}`} target="_blank" rel="noopener noreferrer">
-              <XIcon />
+              <X />
             </a>
           )}
           {userData.instagramusername && (
