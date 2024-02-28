@@ -11,6 +11,56 @@ interface UsernameModalProps {
   address: string | undefined;
 }
 
+const UsernameModal: React.FC<UsernameModalProps> = ({ isOpen, onClose, address }) => {
+  const [username, setUsername] = useState('');
+  const { disconnect } = useDisconnect(); // Use the useDisconnect hook
+
+  const handleSave = async () => {
+    if (username && address) {
+      const docRef = doc(db, "userProfiles", address);
+      try {
+        // Include profileimg and bannerimg fields with placeholder URLs
+        await setDoc(docRef, { 
+          username, 
+          address,
+          profileimg: "https://thumbs2.imgbox.com/0e/65/iUW18SaA_t.png",
+          bannerimg: "https://i.imgur.com/LMIT3hC.png"
+        });
+        console.log("Profile created successfully");
+        onClose(); 
+      } catch (error) {
+        console.error("Error creating profile: ", error);
+      }
+    }
+  };
+
+  // Handle the close action with disconnect logic
+  const handleClose = () => {
+    disconnect(); // Disconnect the wallet
+    onClose(); // Close the modal
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <ModalOverlay>
+      <ModalContent>
+        <CloseButton onClick={handleClose}>X</CloseButton>
+        <h2>Select a Username</h2>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+        />
+        <button onClick={handleSave}>Confirm</button>
+      </ModalContent>
+    </ModalOverlay>
+  );
+};
+
+export default UsernameModal;
+
 // Styled components
 const ModalOverlay = styled.div`
   position: fixed;
@@ -39,50 +89,4 @@ const CloseButton = styled.button`
   top: 10px;
   right: 10px;
 `;
-
-const UsernameModal: React.FC<UsernameModalProps> = ({ isOpen, onClose, address }) => {
-  const [username, setUsername] = useState('');
-  const { disconnect } = useDisconnect(); // Use the useDisconnect hook
-
-  const handleSave = async () => {
-    if (username && address) {
-      const docRef = doc(db, "userProfiles", address);
-      try {
-        await setDoc(docRef, { username });
-        console.log("Profile created successfully");
-        onClose();
-      } catch (error) {
-        console.error("Error creating profile: ", error);
-      }
-    }
-  };
-
-  // Handle the close action with disconnect logic
-  const handleClose = () => {
-    disconnect(); // Disconnect the wallet
-    onClose(); // Close the modal
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <ModalOverlay>
-      <ModalContent>
-        <CloseButton onClick={handleClose}>X</CloseButton>
-        <h2>Mint a Username</h2>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
-        <button onClick={handleSave}>Mint</button>
-      </ModalContent>
-    </ModalOverlay>
-  );
-};
-
-export default UsernameModal;
-
-
 

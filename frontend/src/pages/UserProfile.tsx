@@ -8,14 +8,14 @@ import {
   getDocs,
   DocumentData,
 } from "firebase/firestore";
-import db from "../data/firebase/firebaseConfig.js";
+import db from "../data/firebase/firebaseConfig";
 
-import MainContainer from "../shared/components/MainContainer.js";
+import MainContainer from "../shared/components/MainContainer";
 
 // icons
 import XIcon from "@mui/icons-material/X";
-import Instagram from "@mui/icons-material/Instagram.js";
-import Telegram from "@mui/icons-material/Telegram.js";
+import Instagram from "@mui/icons-material/Instagram";
+import Telegram from "@mui/icons-material/Telegram";
 // import Roof from "../assets/rooftest.svg"
 
 const UserProfile = () => {
@@ -43,6 +43,10 @@ const UserProfile = () => {
     fetchUserData();
   }, [username]);
 
+  const formatAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -52,7 +56,7 @@ const UserProfile = () => {
       {/* <RoofOverlay src={Roof} /> */}
       <BannerDiv>
         <img
-          src="https://pbs.twimg.com/profile_banners/1023520112/1693269192/1500x500"
+        src={userData.bannerimg}
           alt="Banner"
         />
         <SocialMediaIcons>
@@ -81,12 +85,13 @@ const UserProfile = () => {
       </BannerDiv>
       <TopContainer>
         <ProfilePicture>
-          <img src="https://thumbs2.imgbox.com/0e/65/iUW18SaA_t.png" alt="profile picture"/>
+          <img src={userData.profileimg} alt="profile picture"/>
         </ProfilePicture>
         <InfoContainer>
         <UserInfo>
           <h2>{userData.username}</h2>
-          <span>0x4g5f...6578</span>
+          <span>{userData.address ? formatAddress(userData.address) : 'Loading...'}</span>
+          <p>{userData.bio}</p>
         </UserInfo>
         <ActionButtons>
           <ActionButton>Add as Friend</ActionButton>
@@ -155,13 +160,13 @@ const TopContainer = styled.div`
 `;
 
 const ProfilePicture = styled.div`
-  flex-shrink: 0; // Prevent the profile picture from shrinking
-  width: 200px; // Fixed width for the profile picture
-  height: 200px; // Fixed height to ensure consistency
+  flex-shrink: 0; 
+  width: 200px; 
+  height: 200px; 
   & img {
     width: 100%;
-    height: 100%; // Make sure the image covers the full size of the container
-    object-fit: cover; // Adjust this as needed to maintain the aspect ratio of your images
+    height: 100%; 
+    object-fit: cover; 
     border-radius: 10px;
   }
 `;
@@ -188,13 +193,17 @@ const UserInfo = styled.div`
     font-weight: 500;
     opacity: 0.5;
   }
+  & p {
+    margin-top: 15px;
+  }
 `;
 
 const ActionButtons = styled.div`
   display: flex;
-  flex-direction: column; // Arrange buttons in a column
-  align-items: flex-start; // Align buttons to the start (left side)
-  gap: 10px; // Space between buttons
+  flex-direction: column; 
+  align-items: flex-start; 
+  justify-content: center;
+  gap: 10px;
 `;
 
 const ActionButton = styled.button`
