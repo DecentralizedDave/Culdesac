@@ -184,24 +184,24 @@ const UserInfo = styled.div`
   }
 `;
 
-const ActionButtons = styled.div`
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-  justify-content: center;
-  gap: 10px;
-`;
+// const ActionButtons = styled.div`
+//   display: flex;
+//   flex-direction: column; 
+//   align-items: flex-start; 
+//   justify-content: center;
+//   gap: 10px;
+// `;
 
-const ActionButton = styled.button`
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
+// const ActionButton = styled.button`
+//   background: none;
+//   border: none;
+//   color: white;
+//   cursor: pointer;
+//   text-decoration: underline;
+//   padding: 0;
+//   &:hover {
+//     opacity: 0.8;
+//   }
+// `;
 
 
