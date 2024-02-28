@@ -109,11 +109,15 @@ const EditButton = styled.button`
 const BannerDiv = styled.div`
   width: 100%;
   position: relative;
-  min-height: 200px;
+  height: 250px; // Adjust this height to fit your design
+  overflow: hidden; // This ensures the image doesn't overflow the div size
   & img {
     width: 100%;
+    height: 100%; // Make the image fully cover the div height
     display: block;
     border-radius: 20px;
+    object-fit: cover; // This makes the image cover the div without distorting its aspect ratio
+    object-position: center; // This centers the image within the div
   }
 `;
 

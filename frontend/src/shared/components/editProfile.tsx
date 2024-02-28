@@ -5,6 +5,20 @@ import db from "../../data/firebase/firebaseConfig";
 import Moralis from "moralis";
 import { initializeMoralis } from "../../utils/initializeMoralis";
 
+import {
+  Close,
+  ArrowBackIos,
+  Add,
+  Feed,
+  X,
+  Telegram,
+  Instagram,
+} from "@mui/icons-material";
+
+interface ImagePreviewProps {
+  isBanner?: boolean;
+}
+
 interface EditProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -25,11 +39,17 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   onClose,
   address,
   userData,
-  onProfileUpdate
+  onProfileUpdate,
 }) => {
+  const [showProfileNFTSelection, setShowProfileNFTSelection] = useState(false);
+  const [showBannerNFTSelection, setShowBannerNFTSelection] = useState(false);
+  const [selectedProfileImg, setSelectedProfileImg] = useState(
+    userData.profileimg || ""
+  );
+  const [selectedBannerImg, setSelectedBannerImg] = useState(
+    userData.bannerimg || ""
+  );
   const [nfts, setNfts] = useState<any[]>([]);
-  const [showNFTSelection, setShowNFTSelection] = useState(false);
-  const [bannerImg, setBannerImg] = useState(userData.bannerimg || "");
   const [instagramUsername, setInstagramUsername] = useState(
     userData.instagramusername || ""
   );
@@ -41,7 +61,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
   useEffect(() => {
     const fetchNFTs = async () => {
-      if (address && isOpen) {
+      if (
+        address &&
+        isOpen &&
+        (showProfileNFTSelection || showBannerNFTSelection)
+      ) {
         await initializeMoralis();
         try {
           const response = await Moralis.EvmApi.nft.getWalletNFTs({
@@ -59,21 +83,20 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
       }
     };
 
-    if (showNFTSelection) {
+    if (showProfileNFTSelection || showBannerNFTSelection) {
       fetchNFTs();
     }
-  }, [address, isOpen, showNFTSelection]);
-  
+  }, [address, isOpen, showProfileNFTSelection, showBannerNFTSelection]);
 
-  const handleSave = async (profileImg: string) => {
+  const handleSave = async () => {
     if (address) {
       const docRef = doc(db, "userProfiles", address);
       try {
         await setDoc(
           docRef,
           {
-            profileimg: profileImg,
-            bannerimg: bannerImg,
+            profileimg: selectedProfileImg,
+            bannerimg: selectedBannerImg,
             bio: myBio,
             xusername: xUsername,
             instagramusername: instagramUsername,
@@ -90,9 +113,17 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     }
   };
 
-  const selectNFT = (imageUrl: string) => {
-    handleSave(imageUrl);
-    setShowNFTSelection(false);
+  const selectNFT = (imageUrl: string, type: "profile" | "banner") => {
+    if (type === "profile") {
+      setSelectedProfileImg(imageUrl);
+      setShowProfileNFTSelection(false);
+    } else {
+      setSelectedBannerImg(imageUrl);
+      setShowBannerNFTSelection(false);
+    }
+    // Add this to return to the main modal view
+    setShowProfileNFTSelection(false);
+    setShowBannerNFTSelection(false);
   };
 
   if (!isOpen) return null;
@@ -100,10 +131,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   const convertIpfsUrl = (ipfsUrl: string) => {
     const ipfsPrefix = "ipfs://";
     if (ipfsUrl.startsWith(ipfsPrefix)) {
-      // Using Cloudflare's IPFS gateway but you can choose another one
       return ipfsUrl.replace(ipfsPrefix, "https://cloudflare-ipfs.com/ipfs/");
     }
-    return ipfsUrl; // Return the original URL if it's not an IPFS URL
+    return ipfsUrl;
   };
 
   const PlaceholderImage = "https://place-hold.it/100x100/white";
@@ -111,9 +141,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   return (
     <ModalOverlay>
       <ModalContent>
-        <CloseButton onClick={onClose}>X</CloseButton>
-        {showNFTSelection ? (
+        <CloseButton onClick={onClose}>
+          <Close />
+        </CloseButton>
+        {showProfileNFTSelection || showBannerNFTSelection ? (
           <>
+            <BackButton
+              onClick={() => {
+                setShowProfileNFTSelection(false);
+                setShowBannerNFTSelection(false);
+              }}
+            >
+              <ArrowBackIos />
+            </BackButton>
             <h2>Select Your NFT</h2>
             <NFTGrid>
               {nfts
@@ -126,14 +166,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   return (
                     <NFTThumbnail
                       key={index}
-                      onClick={() => selectNFT(imageUrl)}
+                      onClick={() =>
+                        selectNFT(
+                          imageUrl,
+                          showProfileNFTSelection ? "profile" : "banner"
+                        )
+                      }
                     >
                       <img
                         src={imageUrl}
                         alt={`NFT ${index}`}
                         onError={(e) =>
                           (e.currentTarget.src = PlaceholderImage)
-                        } // Replace with placeholder on error
+                        }
                       />
                     </NFTThumbnail>
                   );
@@ -141,42 +186,69 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             </NFTGrid>
           </>
         ) : (
-          <>
+          <EditDiv>
             <h2>Edit Profile</h2>
-            <Button onClick={() => setShowNFTSelection(true)}>
-              Select NFT
+            <Button onClick={() => setShowProfileNFTSelection(true)}>
+              <Add /> Select Profile NFT
             </Button>
-            <input
-              type="text"
-              value={bannerImg}
-              onChange={(e) => setBannerImg(e.target.value)}
-              placeholder="Banner Image URL"
-            />
-            <input
-              type="text"
-              value={myBio}
-              onChange={(e) => setmyBio(e.target.value)}
-              placeholder="Bio"
-            />
-            <input
-              type="text"
-              value={xUsername}
-              onChange={(e) => setxUsername(e.target.value)}
-              placeholder="X Username"
-            />
-            <input
-              type="text"
-              value={instagramUsername}
-              onChange={(e) => setInstagramUsername(e.target.value)}
-              placeholder="Instagram Username"
-            />
-            <input
-              type="text"
-              value={telegramUsername}
-              onChange={(e) => setTelegramUsername(e.target.value)}
-              placeholder="Telegram Username"
-            />
-          </>
+            <ImagePreviewContainer>
+              <ImagePreview
+                src={selectedProfileImg || PlaceholderImage}
+                alt="Profile Image"
+              />
+            </ImagePreviewContainer>
+            <Button onClick={() => setShowBannerNFTSelection(true)}>
+              <Add /> Select Banner NFT
+            </Button>
+            <ImagePreviewContainer>
+              <ImagePreview
+                isBanner={true}
+                src={selectedBannerImg || PlaceholderImage}
+                alt="Banner Image"
+              />
+            </ImagePreviewContainer>
+            <InputDiv>
+              <Feed />
+              <input
+                type="text"
+                value={myBio}
+                onChange={(e) => setmyBio(e.target.value)}
+                placeholder="Bio"
+                maxLength={30}
+              />
+            </InputDiv>
+            <InputDiv>
+              <X />
+              <input
+                type="text"
+                value={xUsername}
+                onChange={(e) => setxUsername(e.target.value)}
+                placeholder="X Username"
+              />
+            </InputDiv>
+
+            <InputDiv>
+              <Instagram />
+              <input
+                type="text"
+                value={instagramUsername}
+                onChange={(e) => setInstagramUsername(e.target.value)}
+                placeholder="Instagram Username"
+              />
+            </InputDiv>
+
+            <InputDiv>
+              <Telegram />
+              <input
+                type="text"
+                value={telegramUsername}
+                onChange={(e) => setTelegramUsername(e.target.value)}
+                placeholder="Telegram Username"
+              />
+            </InputDiv>
+
+            <SaveButton onClick={handleSave}>Save</SaveButton>
+          </EditDiv>
         )}
       </ModalContent>
     </ModalOverlay>
@@ -200,9 +272,9 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: black;
+  background: #222628;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 500px;
@@ -213,10 +285,40 @@ const CloseButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
   margin-top: 20px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const EditDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  & div {
+  }
 `;
 
 const NFTGrid = styled.div`
@@ -234,5 +336,62 @@ const NFTThumbnail = styled.div`
     width: 100%;
     height: auto;
     border-radius: 8px;
+  }
+`;
+
+const ImagePreviewContainer = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: 10px;
+`;
+
+const ImagePreview = styled.img<ImagePreviewProps>`
+  width: ${({ isBanner }) => (isBanner ? "150px" : "100px")};
+  height: ${({ isBanner }) => (isBanner ? "50px" : "100px")}; 
+  object-fit: cover;
+  border-radius: 10px;
+`;
+
+const SaveButton = styled.button`
+  margin-top: 20px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const BackButton = styled.button`
+  margin-bottom: 20px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const InputDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  & input {
+    padding: 10px 15px;
+    border: none;
+    background: #191b1d;
+    border-radius: 10px;
   }
 `;
