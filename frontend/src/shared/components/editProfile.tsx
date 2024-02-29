@@ -4,6 +4,7 @@ import { doc, setDoc } from "firebase/firestore";
 import db from "../../data/firebase/firebaseConfig";
 import Moralis from "moralis";
 import { initializeMoralis } from "../../utils/initializeMoralis";
+import { COLORS } from "../../shared/constants/colors";
 
 import {
   Close,
@@ -286,44 +287,49 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: #222628;
+  background: ${COLORS.white};
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid ${COLORS.secondary};
   width: 90%;
   max-width: 500px;
   position: relative;
+  & h2 {
+    color: ${COLORS.black};
+    margin-bottom: 15px;
+  }
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+position: absolute;
+color: ${COLORS.black};
+top: 10px;
+right: 10px;
+background: transparent;
+border: none;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
 `;
 
 const Button = styled.button`
-  margin-top: 20px;
-  padding: 8px 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 500;
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 250ms ease-in-out;
-  &:hover {
-    opacity: 0.7;
-  }
+background-color: ${COLORS.buttons.secondary};
+margin: 5px;
+border: none;
+padding: 8px 15px;
+color: ${COLORS.black};
+font-weight: 600;
+border-radius: 5px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+transition 250ms ease-in-out;
+&:hover {
+    opacity: 0.8;
+}
 `;
 
 const EditDiv = styled.div`
@@ -367,22 +373,21 @@ const ImagePreview = styled.img<ImagePreviewProps>`
 `;
 
 const SaveButton = styled.button`
-  margin-top: 20px;
-  padding: 8px 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 500;
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 250ms ease-in-out;
-  &:hover {
-    opacity: 0.7;
-  }
+background-color: ${COLORS.buttons.primary};
+margin: 5px;
+border: none;
+padding: 10px 25px;
+color: ${COLORS.white};
+font-weight: 600;
+border-radius: 5px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+transition 250ms ease-in-out;
+&:hover {
+    opacity: 0.8;
+}
 `;
 
 const BackButton = styled.button`
@@ -401,11 +406,13 @@ const InputDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  color: ${COLORS.black};
   margin-bottom: 10px;
   & input {
     padding: 10px 15px;
     border: none;
-    background: #191b1d;
+    color: ${COLORS.black};
+    background: ${COLORS.buttons.secondary};
     border-radius: 10px;
   }
 `;

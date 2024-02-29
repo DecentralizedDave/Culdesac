@@ -95,7 +95,6 @@ const CommunityDiv = styled.div`
     cursor: pointer;
     display: flex;
     justify-content: center;
-    
     transition 250ms ease-in-out;
     &:hover {
         opacity: 0.8;

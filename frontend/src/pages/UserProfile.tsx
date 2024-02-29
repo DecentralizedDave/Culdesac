@@ -63,29 +63,44 @@ const UserProfile = () => {
         src={userData.bannerimg}
           alt="Banner"
         />
-        <SocialMediaIcons>
-          <a
-            href="https://twitter.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
+        <SocialMediaIcons
+            style={{
+              display:
+                userData.xusername ||
+                userData.instagramusername ||
+                userData.telegramusername
+                  ? "flex"
+                  : "none",
+            }}
           >
-            <X />
-          </a>
-          <a
-            href="https://instagram.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Instagram />
-          </a>
-          <a
-            href="https://facebook.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Telegram />
-          </a>
-        </SocialMediaIcons>
+            {userData.xusername && (
+              <a
+                href={`https://x.com/${userData.xusername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <X />
+              </a>
+            )}
+            {userData.instagramusername && (
+              <a
+                href={`https://instagram.com/${userData.instagramusername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram />
+              </a>
+            )}
+            {userData.telegramusername && (
+              <a
+                href={`https://telegram.me/${userData.telegramusername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Telegram />
+              </a>
+            )}
+          </SocialMediaIcons>
       </BannerDiv>
       <TopContainer>
         <ProfilePicture>
