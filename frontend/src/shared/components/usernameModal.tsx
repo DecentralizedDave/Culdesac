@@ -34,6 +34,8 @@ const UsernameModal: React.FC<UsernameModalProps> = ({
           favNftCabinet: false,
           musicPlayer: false,
           favCommunityCabinet: false,
+          blogCabinet: false,
+          interests: "",
           mood: "",
         });
         console.log("Profile created successfully");

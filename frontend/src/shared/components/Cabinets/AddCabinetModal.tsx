@@ -4,7 +4,7 @@ import { doc, setDoc } from "firebase/firestore";
 import db from "../../../data/firebase/firebaseConfig";
 import { COLORS } from "../../../shared/constants/colors";
 
-import { Close, Palette, Public, GraphicEq } from "@mui/icons-material";
+import { Close, Palette, Public, GraphicEq, Book } from "@mui/icons-material";
 
 interface AddCabinetModalProps {
   userId: string;
@@ -40,6 +40,9 @@ const AddCabinetModal: React.FC<AddCabinetModalProps> = ({
           </button>
           <button onClick={() => addCabinet("musicPlayer")}>
             <GraphicEq style={{ marginRight: "5px" }}/> Music Player
+          </button>
+          <button onClick={() => addCabinet("blogCabinet")}>
+            <Book style={{ marginRight: "5px" }}/> Blog
           </button>
         </ButtonDiv>
       </ModalContent>

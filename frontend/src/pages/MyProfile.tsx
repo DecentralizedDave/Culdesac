@@ -19,6 +19,7 @@ import AddCabinetModal from "../shared/components/Cabinets/AddCabinetModal";
 import FavoriteNftCabinet from "../shared/components/Cabinets/favoriteNftCabinet";
 import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet";
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
+import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
 
 import { X, Telegram, Instagram } from "@mui/icons-material";
 
@@ -149,6 +150,7 @@ const MyProfile = () => {
         
         {/* // Cabinets */}
         {userData.favNftCabinet && <FavoriteNftCabinet address={userData.address} />}
+        {userData.blogCabinet && <UserBlogCabinet address={userData.address} />}
         {userData.musicPlayer && <MusicPlayerCabinet address={userData.address} />}
         {userData.favCommunityCabinet && <FavCommunity address={userData.address} />}
         <AddCabinet onAddCabinetClick={toggleAddCabinetModal} />

@@ -4,7 +4,7 @@ import MainContainer from "../MainContainer";
 import { COLORS } from "../../../shared/constants/colors";
 
 interface MusicPlayerCabinetProps {
-    address: string; // Define the type for the address prop
+    address: string; 
 }
 
 function MusicPlayerCabinet({ address }: MusicPlayerCabinetProps) {

@@ -9,16 +9,17 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import db from "../data/firebase/firebaseConfig";
-import { COLORS } from '../shared/constants/colors';
+import { COLORS } from "../shared/constants/colors";
 
 import MainContainer from "../shared/components/MainContainer";
 import PoapList from "../shared/components/Cabinets/PoapList";
 import FavoriteNftCabinet from "../shared/components/Cabinets/favoriteNftCabinet";
 import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet";
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
+import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
 
 // icons
-import {X, Telegram, Instagram} from "@mui/icons-material";
+import { X, Telegram, Instagram } from "@mui/icons-material";
 
 // import Roof from "../assets/rooftest.svg"
 
@@ -29,13 +30,11 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       if (username) {
-        // Adjust the query to look for the username field
         const usersRef = collection(db, "userProfiles");
         const q = query(usersRef, where("username", "==", username));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
-          // Assuming username is unique, take the first document found
           const userDoc = querySnapshot.docs[0];
           setUserData(userDoc.data());
         } else {
@@ -59,73 +58,81 @@ const UserProfile = () => {
     <MainContainer>
       {/* <RoofOverlay src={Roof} /> */}
       <BannerDiv>
-        <img
-        src={userData.bannerimg}
-          alt="Banner"
-        />
+        <img src={userData.bannerimg} alt="Banner" />
         <SocialMediaIcons
-            style={{
-              display:
-                userData.xusername ||
-                userData.instagramusername ||
-                userData.telegramusername
-                  ? "flex"
-                  : "none",
-            }}
-          >
-            {userData.xusername && (
-              <a
-                href={`https://x.com/${userData.xusername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <X />
-              </a>
-            )}
-            {userData.instagramusername && (
-              <a
-                href={`https://instagram.com/${userData.instagramusername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Instagram />
-              </a>
-            )}
-            {userData.telegramusername && (
-              <a
-                href={`https://telegram.me/${userData.telegramusername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Telegram />
-              </a>
-            )}
-          </SocialMediaIcons>
+          style={{
+            display:
+              userData.xusername ||
+              userData.instagramusername ||
+              userData.telegramusername
+                ? "flex"
+                : "none",
+          }}
+        >
+          {userData.xusername && (
+            <a
+              href={`https://x.com/${userData.xusername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <X />
+            </a>
+          )}
+          {userData.instagramusername && (
+            <a
+              href={`https://instagram.com/${userData.instagramusername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram />
+            </a>
+          )}
+          {userData.telegramusername && (
+            <a
+              href={`https://telegram.me/${userData.telegramusername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Telegram />
+            </a>
+          )}
+        </SocialMediaIcons>
       </BannerDiv>
       <TopContainer>
         <ProfilePicture>
-          <img src={userData.profileimg} alt="profile picture"/>
+          <img src={userData.profileimg} alt="profile picture" />
         </ProfilePicture>
         <InfoContainer>
-        <UserInfo>
-          <h2>{userData.username}</h2>
-          <span>{userData.address ? formatAddress(userData.address) : 'Loading...'}</span>
-          <p>{userData.bio}</p>
-        </UserInfo>
-        <ActionButtons>
-          <ActionButton>Add as Friend</ActionButton>
-          <ActionButton>Send Message</ActionButton>
-          <ActionButton>Send a Gift</ActionButton>
-          <ActionButton>Offer Trade</ActionButton>
-          <ActionButton>Block User</ActionButton>
-          <ActionButton>Report User</ActionButton>
-        </ActionButtons>
+          <UserInfo>
+            <h2>{userData.username}</h2>
+            <span>
+              {userData.address
+                ? formatAddress(userData.address)
+                : "Loading..."}
+            </span>
+            <p>{userData.bio}</p>
+          </UserInfo>
+          <ActionButtons>
+            <ActionButton>Add as Friend</ActionButton>
+            <ActionButton>Send Message</ActionButton>
+            <ActionButton>Send a Gift</ActionButton>
+            <ActionButton>Offer Trade</ActionButton>
+            <ActionButton>Block User</ActionButton>
+            <ActionButton>Report User</ActionButton>
+          </ActionButtons>
         </InfoContainer>
       </TopContainer>
       {userData && <PoapList address={userData.address} />}
-      {userData.favNftCabinet && <FavoriteNftCabinet address={userData.address} />}
-        {userData.musicPlayer && <MusicPlayerCabinet address={userData.address} />}
-        {userData.favCommunityCabinet && <FavCommunity address={userData.address} />}
+      {userData.favNftCabinet && (
+        <FavoriteNftCabinet address={userData.address} />
+      )}
+      {userData.musicPlayer && (
+        <MusicPlayerCabinet address={userData.address} />
+      )}
+      {userData.favCommunityCabinet && (
+        <FavCommunity address={userData.address} />
+      )}
+      {userData.blogCabinet && <UserBlogCabinet address={userData.address} />}
     </MainContainer>
   );
 };
@@ -137,14 +144,14 @@ export default UserProfile;
 const BannerDiv = styled.div`
   width: 100%;
   position: relative;
-  height: 250px; 
-  overflow: hidden; 
+  height: 250px;
+  overflow: hidden;
   & img {
     width: 100%;
-    height: 100%; 
+    height: 100%;
     display: block;
     border-radius: 20px;
-    object-fit: cover; 
+    object-fit: cover;
     object-position: center;
   }
 `;
@@ -188,28 +195,26 @@ const TopContainer = styled.div`
 `;
 
 const ProfilePicture = styled.div`
-  flex-shrink: 0; 
-  width: 200px; 
-  height: 200px; 
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
   & img {
     width: 100%;
-    height: 100%; 
-    object-fit: cover; 
+    height: 100%;
+    object-fit: cover;
     border-radius: 10px;
   }
 `;
 
-
-
 const InfoContainer = styled.div`
-  display: flex; 
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
   flex-grow: 1;
   background: ${COLORS.white};
   border: 1px solid ${COLORS.secondary};
   border-radius: 10px;
   padding: 15px;
-  gap: 20px; 
+  gap: 20px;
 `;
 
 const UserInfo = styled.div`
@@ -231,8 +236,8 @@ const UserInfo = styled.div`
 
 const ActionButtons = styled.div`
   display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
   gap: 10px;
 `;
@@ -248,4 +253,3 @@ const ActionButton = styled.button`
     opacity: 0.8;
   }
 `;
-
