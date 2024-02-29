@@ -24,7 +24,11 @@ const UsernameModal: React.FC<UsernameModalProps> = ({ isOpen, onClose, address 
           username, 
           address,
           profileimg: "https://thumbs2.imgbox.com/0e/65/iUW18SaA_t.png",
-          bannerimg: "https://i.imgur.com/LMIT3hC.png"
+          bannerimg: "https://i.imgur.com/LMIT3hC.png",
+          favNftCabinet: false,
+          musicPlayer: false,
+          favCommunityCabinet: false,
+          mood: "",
         });
         console.log("Profile created successfully");
         onClose(); 

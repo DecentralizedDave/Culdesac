@@ -1,20 +1,26 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAccount } from 'wagmi'; 
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { doc, getDoc, DocumentData } from 'firebase/firestore';
-import db from '../data/firebase/firebaseConfig';
-import styled from 'styled-components';
-import { COLORS } from '../shared/constants/colors';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAccount } from "wagmi";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { doc, getDoc, DocumentData } from "firebase/firestore";
+import db from "../data/firebase/firebaseConfig";
+import styled from "styled-components";
+import { COLORS } from "../shared/constants/colors";
 
+// components
+import MainContainer from "../shared/components/MainContainer";
+import EditProfileModal from "../shared/components/editProfile";
+import PoapList from "../shared/components/Cabinets/PoapList";
 
-import MainContainer from '../shared/components/MainContainer';
-import EditProfileModal from '../shared/components/editProfile';
-import PoapList from '../shared/components/Cabinets/PoapList';
+// Cabinet Components
+import AddCabinet from "../shared/components/Cabinets/AddCabinet";
+import AddCabinetModal from "../shared/components/Cabinets/AddCabinetModal";
+import FavoriteNftCabinet from "../shared/components/Cabinets/favoriteNftCabinet";
+import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet";
+import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 
-import {X, Telegram, Instagram} from "@mui/icons-material";
-
+import { X, Telegram, Instagram } from "@mui/icons-material";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -22,10 +28,11 @@ const MyProfile = () => {
   const [userData, setUserData] = useState<DocumentData | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [showAddCabinetModal, setShowAddCabinetModal] = useState(false);
 
   useEffect(() => {
     if (!isConnected) {
-      navigate('/'); // Redirect if not connected
+      navigate("/"); // Redirect if not connected
     } else if (address) {
       const fetchUserData = async () => {
         const docRef = doc(db, "userProfiles", address);
@@ -58,48 +65,96 @@ const MyProfile = () => {
     return <div>Loading...</div>;
   }
 
+  const toggleAddCabinetModal = () => {
+    setShowAddCabinetModal(!showAddCabinetModal);
+  };
+
   return (
     <>
-    <MainContainer>
-      {editMode && (
-        <EditProfileModal isOpen={editMode} onClose={toggleEditMode} address={address} userData={userData} onProfileUpdate={onProfileUpdate} />
-      )}
-      <BannerDiv>
-        <img src={userData.bannerimg} alt="Banner" />
-        <EditButton><button onClick={toggleEditMode}>Edit Profile</button></EditButton>
-        <SocialMediaIcons style={{ display: (userData.xusername || userData.instagramusername || userData.telegramusername) ? 'flex' : 'none' }}>
-          {userData.xusername && (
-            <a href={`https://x.com/${userData.xusername}`} target="_blank" rel="noopener noreferrer">
-              <X />
-            </a>
-          )}
-          {userData.instagramusername && (
-            <a href={`https://instagram.com/${userData.instagramusername}`} target="_blank" rel="noopener noreferrer">
-              <Instagram />
-            </a>
-          )}
-          {userData.telegramusername && (
-            <a href={`https://telegram.me/${userData.telegramusername}`} target="_blank" rel="noopener noreferrer">
-              <Telegram />
-            </a>
-          )}
-        </SocialMediaIcons>
-      </BannerDiv>
-      <TopContainer>
-      <ProfilePicture>
-        <img src={userData.profileimg} alt="Profile" />
-      </ProfilePicture>
-      <InfoContainer>
-        <UserInfo>
-          <h2>{userData.username}</h2>
-          <span>{userData.address ? formatAddress(userData.address) : 'Loading...'}</span>
-          <p>{userData.bio}</p>
-        </UserInfo>
-        </InfoContainer>
-      </TopContainer>
-      <PoapList/>
-    </MainContainer>
-    <ToastContainer position="bottom-right" />
+      <MainContainer>
+        {editMode && (
+          <EditProfileModal
+            isOpen={editMode}
+            onClose={toggleEditMode}
+            address={address}
+            userData={userData}
+            onProfileUpdate={onProfileUpdate}
+          />
+        )}
+        {showAddCabinetModal && address && (
+          <AddCabinetModal userId={address} onClose={toggleAddCabinetModal}  onProfileUpdate={onProfileUpdate} />
+        )}
+        <BannerDiv>
+          <img src={userData.bannerimg} alt="Banner" />
+          <EditButton>
+            <button onClick={toggleEditMode}>Edit Profile</button>
+          </EditButton>
+          <SocialMediaIcons
+            style={{
+              display:
+                userData.xusername ||
+                userData.instagramusername ||
+                userData.telegramusername
+                  ? "flex"
+                  : "none",
+            }}
+          >
+            {userData.xusername && (
+              <a
+                href={`https://x.com/${userData.xusername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <X />
+              </a>
+            )}
+            {userData.instagramusername && (
+              <a
+                href={`https://instagram.com/${userData.instagramusername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram />
+              </a>
+            )}
+            {userData.telegramusername && (
+              <a
+                href={`https://telegram.me/${userData.telegramusername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Telegram />
+              </a>
+            )}
+          </SocialMediaIcons>
+        </BannerDiv>
+        <TopContainer>
+          <ProfilePicture>
+            <img src={userData.profileimg} alt="Profile" />
+          </ProfilePicture>
+          <InfoContainer>
+            <UserInfo>
+              <h2>{userData.username}</h2>
+              <span>
+                {userData.address
+                  ? formatAddress(userData.address)
+                  : "Loading..."}
+              </span>
+              <p>{userData.bio}</p>
+              <Mood>Mood: {userData.mood}</Mood>
+            </UserInfo>
+          </InfoContainer>
+        </TopContainer>
+        {userData && <PoapList address={userData.address} />}
+        
+        {/* // Cabinets */}
+        {userData.favNftCabinet && <FavoriteNftCabinet address={userData.address} />}
+        {userData.musicPlayer && <MusicPlayerCabinet address={userData.address} />}
+        {userData.favCommunityCabinet && <FavCommunity address={userData.address} />}
+        <AddCabinet onAddCabinetClick={toggleAddCabinetModal} />
+
+      </MainContainer>
+      <ToastContainer position="bottom-right" />
     </>
   );
 };
@@ -107,39 +162,39 @@ const MyProfile = () => {
 export default MyProfile;
 
 const EditButton = styled.div`
-position: absolute;
-top: 0px;
-right: 0px;
-display: flex;
-padding: 15px;
-align-items: center;
-justify-content: center;
-& button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 10px;
-  background: ${COLORS.buttons.secondary};
-  color: ${COLORS.black};
-  opacity: 0.5;
-  cursor: pointer;
-  transition: 250ms ease-in-out;
-  &:hover {
-    opacity: 1;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
+  & button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 10px;
+    background: ${COLORS.buttons.secondary};
+    color: ${COLORS.black};
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 250ms ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
   }
-}
 `;
 
 const BannerDiv = styled.div`
   width: 100%;
   position: relative;
-  height: 250px; 
-  overflow: hidden; 
+  height: 250px;
+  overflow: hidden;
   & img {
     width: 100%;
-    height: 100%; 
+    height: 100%;
     display: block;
     border-radius: 20px;
-    object-fit: cover; 
+    object-fit: cover;
     object-position: center;
   }
 `;
@@ -183,28 +238,26 @@ const TopContainer = styled.div`
 `;
 
 const ProfilePicture = styled.div`
-  flex-shrink: 0; 
-  width: 200px; 
-  height: 200px; 
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
   & img {
     width: 100%;
-    height: 100%; 
-    object-fit: cover; 
+    height: 100%;
+    object-fit: cover;
     border-radius: 10px;
   }
 `;
 
-
-
 const InfoContainer = styled.div`
-  display: flex; 
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
   flex-grow: 1;
   background: ${COLORS.white};
   border: 1px solid ${COLORS.secondary};
   border-radius: 10px;
   padding: 15px;
-  gap: 20px; 
+  gap: 20px;
 `;
 
 const UserInfo = styled.div`
@@ -220,14 +273,15 @@ const UserInfo = styled.div`
   }
   & p {
     margin-top: 15px;
+    margin-bottom: 25px;
     color: ${COLORS.black};
   }
 `;
 
 // const ActionButtons = styled.div`
 //   display: flex;
-//   flex-direction: column; 
-//   align-items: flex-start; 
+//   flex-direction: column;
+//   align-items: flex-start;
 //   justify-content: center;
 //   gap: 10px;
 // `;
@@ -245,3 +299,7 @@ const UserInfo = styled.div`
 // `;
 
 
+const Mood = styled.span`
+  color: ${COLORS.success} !important;
+  font-weight: 600 !important;
+`

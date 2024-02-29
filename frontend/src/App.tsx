@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { BrowserRouter as Router } from "react-router-dom";
 import { WalletProvider } from "./shared/components/walletContext";
 import { Web3Provider } from "./web3/web3Config";
@@ -19,14 +20,18 @@ function App() {
   );
 }
 
-// This component is responsible for rendering the app content and using the useWallet hook
 function AppContent() {
   return (
     <>
       <Navbar />
       <PageRoutes />
+      <Footer />
     </>
   );
 }
 
 export default App;
+
+const Footer = styled.div`
+  height: 50px;
+`

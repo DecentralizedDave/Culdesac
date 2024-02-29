@@ -13,6 +13,7 @@ import {
   X,
   Telegram,
   Instagram,
+  Mood
 } from "@mui/icons-material";
 
 interface ImagePreviewProps {
@@ -31,6 +32,7 @@ interface EditProfileModalProps {
     xusername?: string;
     instagramusername?: string;
     telegramusername?: string;
+    mood?: string;
   };
 }
 
@@ -58,6 +60,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   );
   const [xUsername, setxUsername] = useState(userData.xusername || "");
   const [myBio, setmyBio] = useState(userData.bio || "");
+  const [myMood, setmyMood] = useState(userData.bio || "");
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -101,6 +104,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             xusername: xUsername,
             instagramusername: instagramUsername,
             telegramusername: telegramUsername,
+            mood: myMood
           },
           { merge: true }
         );
@@ -215,6 +219,16 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 onChange={(e) => setmyBio(e.target.value)}
                 placeholder="Bio"
                 maxLength={30}
+              />
+            </InputDiv>
+            <InputDiv>
+              <Mood />
+              <input
+                type="text"
+                value={myMood}
+                onChange={(e) => setmyMood(e.target.value)}
+                placeholder="Mood"
+                maxLength={10}
               />
             </InputDiv>
             <InputDiv>

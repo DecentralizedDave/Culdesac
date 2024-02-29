@@ -5,34 +5,44 @@ import { COLORS } from "../../../shared/constants/colors";
 import axios from "axios";
 
 interface PoapEvent {
-    event: {
-      image_url: string;
-    };
-  }
+  event: {
+    image_url: string;
+  };
+}
 
-function PoapList() {
-    const [poaps, setPoaps] = useState<PoapEvent[]>([]);
+interface PoapListProps {
+  address: string;
+}
+
+function PoapList({ address }: PoapListProps) {
+  const [poaps, setPoaps] = useState<PoapEvent[]>([]);
 
   useEffect(() => {
-    const options = {
-      method: "GET",
-      url: "https://api.poap.tech/actions/scan/0xa36f7d9917832Bf04358a31900D3cA56E1be1507",
-      headers: {
-        accept: "application/json",
-        "x-api-key": import.meta.env.VITE_APP_POAP_API,
-      },
-    };
+    if (address) {
+      const fetchPOAPs = async () => {
+        const options = {
+          method: "GET",
+          url: `https://api.poap.tech/actions/scan/${address}`,
+          headers: {
+            accept: "application/json",
+            "x-api-key": import.meta.env.VITE_APP_POAP_API,
+          },
+        };
 
-    axios
-      .request(options)
-      .then(function (response) {
-        setPoaps(response.data);
-        console.log(poaps)
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }, []);
+        try {
+          const response = await axios.request(options);
+          setPoaps(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchPOAPs();
+    }
+  }, [address]);
+
+  // Conditionally render nothing if there are no POAPs
+  if (poaps.length === 0) return null;
 
   return (
     <MainContainer>
@@ -55,7 +65,6 @@ function PoapList() {
 }
 
 export default PoapList;
-
 // styles
 const StyledContainer = styled.div`
   background: ${COLORS.white};

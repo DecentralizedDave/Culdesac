@@ -9,8 +9,13 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import db from "../data/firebase/firebaseConfig";
+import { COLORS } from '../shared/constants/colors';
 
 import MainContainer from "../shared/components/MainContainer";
+import PoapList from "../shared/components/Cabinets/PoapList";
+import FavoriteNftCabinet from "../shared/components/Cabinets/favoriteNftCabinet";
+import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet";
+import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 
 // icons
 import {X, Telegram, Instagram} from "@mui/icons-material";
@@ -102,6 +107,10 @@ const UserProfile = () => {
         </ActionButtons>
         </InfoContainer>
       </TopContainer>
+      {userData && <PoapList address={userData.address} />}
+      {userData.favNftCabinet && <FavoriteNftCabinet address={userData.address} />}
+        {userData.musicPlayer && <MusicPlayerCabinet address={userData.address} />}
+        {userData.favCommunityCabinet && <FavCommunity address={userData.address} />}
     </MainContainer>
   );
 };
@@ -113,15 +122,15 @@ export default UserProfile;
 const BannerDiv = styled.div`
   width: 100%;
   position: relative;
-  height: 250px; // Adjust this height to fit your design
-  overflow: hidden; // This ensures the image doesn't overflow the div size
+  height: 250px; 
+  overflow: hidden; 
   & img {
     width: 100%;
-    height: 100%; // Make the image fully cover the div height
+    height: 100%; 
     display: block;
     border-radius: 20px;
-    object-fit: cover; // This makes the image cover the div without distorting its aspect ratio
-    object-position: center; // This centers the image within the div
+    object-fit: cover; 
+    object-position: center;
   }
 `;
 
@@ -133,12 +142,13 @@ const SocialMediaIcons = styled.div`
   gap: 10px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: rgba(217, 217, 217, 0.7);
   padding: 6px 10px;
-  border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 19px;
+  border-top-left-radius: 10px;
   & a {
     text-decoration: none;
-    color: white;
+    color: ${COLORS.black};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,27 +187,30 @@ const ProfilePicture = styled.div`
 
 
 const InfoContainer = styled.div`
-  display: flex; // Use flexbox to align items side by side
-  justify-content: space-between; // Space between user info and action buttons
+  display: flex; 
+  justify-content: space-between; 
   flex-grow: 1;
-  background: #222628;
+  background: ${COLORS.white};
+  border: 1px solid ${COLORS.secondary};
   border-radius: 10px;
   padding: 15px;
-  gap: 20px; // Add some space between the two sections
+  gap: 20px; 
 `;
 
 const UserInfo = styled.div`
   & h2 {
     font-size: 29px;
     margin: 0;
+    color: ${COLORS.black};
   }
   & span {
     font-size: 16px;
     font-weight: 500;
-    opacity: 0.5;
+    color: ${COLORS.secondary};
   }
   & p {
     margin-top: 15px;
+    color: ${COLORS.black};
   }
 `;
 
@@ -212,7 +225,7 @@ const ActionButtons = styled.div`
 const ActionButton = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: ${COLORS.black};
   cursor: pointer;
   text-decoration: underline;
   padding: 0;
