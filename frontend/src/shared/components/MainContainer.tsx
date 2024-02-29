@@ -6,12 +6,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   max-width: 800px;
+  width: 100%;
   margin: 0 auto;
-  padding: 20px;
   margin-top: 30px;
-  @media (max-width: 1200px) {
-    padding: 0 15px;
-  }
 `;
 
 const MainContainer: React.FC<{ children: ReactNode }> = ({ children }) => {

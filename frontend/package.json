@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.11",
     "@tanstack/react-query": "^5.24.1",
     "@web3modal/wagmi": "^4.0.10",
+    "axios": "^1.6.7",
     "firebase": "^10.8.0",
     "moralis": "^2.25.0",
     "react": "^18.2.0",

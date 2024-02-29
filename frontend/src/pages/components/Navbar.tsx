@@ -5,6 +5,8 @@ import { doc, getDoc } from "firebase/firestore";
 import db from "../../data/firebase/firebaseConfig";
 import { useAccount } from "wagmi";
 
+import Logo from "../../assets/logo.svg"
+
 export function Navbar() {
   const { address, isConnected } = useAccount();
   const [profileImg, setProfileImg] = useState('');
@@ -31,7 +33,7 @@ export function Navbar() {
       <Head>
         <Container>
           <Link to="/">
-            <h2>Culdesac</h2>
+            <LogoImg src={Logo} alt="culdesac.club"/>
           </Link>
           <div>
             <w3m-button balance="hide" label="Login" />
@@ -54,7 +56,7 @@ export function Navbar() {
 
 const Head = styled.div`
   width: 100%;
-  padding: 20px;
+  padding: 10px 0;
 `;
 
 const Container = styled.div`
@@ -66,6 +68,11 @@ const Container = styled.div`
     align-items: center;
   }
 `;
+
+const LogoImg = styled.img`
+  width: 40px;
+  height: auto;
+`
 
 const ProfilePic = styled.div`
   flex-shrink: 0;

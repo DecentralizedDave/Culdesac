@@ -6,9 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { doc, getDoc, DocumentData } from 'firebase/firestore';
 import db from '../data/firebase/firebaseConfig';
 import styled from 'styled-components';
+import { COLORS } from '../shared/constants/colors';
+
 
 import MainContainer from '../shared/components/MainContainer';
 import EditProfileModal from '../shared/components/editProfile';
+import PoapList from '../shared/components/Cabinets/PoapList';
 
 import {X, Telegram, Instagram} from "@mui/icons-material";
 
@@ -58,13 +61,13 @@ const MyProfile = () => {
   return (
     <>
     <MainContainer>
-      <EditButton onClick={toggleEditMode}>Edit Profile</EditButton>
       {editMode && (
         <EditProfileModal isOpen={editMode} onClose={toggleEditMode} address={address} userData={userData} onProfileUpdate={onProfileUpdate} />
       )}
       <BannerDiv>
         <img src={userData.bannerimg} alt="Banner" />
-        <SocialMediaIcons>
+        <EditButton><button onClick={toggleEditMode}>Edit Profile</button></EditButton>
+        <SocialMediaIcons style={{ display: (userData.xusername || userData.instagramusername || userData.telegramusername) ? 'flex' : 'none' }}>
           {userData.xusername && (
             <a href={`https://x.com/${userData.xusername}`} target="_blank" rel="noopener noreferrer">
               <X />
@@ -94,6 +97,7 @@ const MyProfile = () => {
         </UserInfo>
         </InfoContainer>
       </TopContainer>
+      <PoapList/>
     </MainContainer>
     <ToastContainer position="bottom-right" />
     </>
@@ -102,22 +106,41 @@ const MyProfile = () => {
 
 export default MyProfile;
 
-const EditButton = styled.button`
-  margin-bottom: 10px;
+const EditButton = styled.div`
+position: absolute;
+top: 0px;
+right: 0px;
+display: flex;
+padding: 15px;
+align-items: center;
+justify-content: center;
+& button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 10px;
+  background: ${COLORS.buttons.secondary};
+  color: ${COLORS.black};
+  opacity: 0.5;
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+}
 `;
 
 const BannerDiv = styled.div`
   width: 100%;
   position: relative;
-  height: 250px; // Adjust this height to fit your design
-  overflow: hidden; // This ensures the image doesn't overflow the div size
+  height: 250px; 
+  overflow: hidden; 
   & img {
     width: 100%;
-    height: 100%; // Make the image fully cover the div height
+    height: 100%; 
     display: block;
     border-radius: 20px;
-    object-fit: cover; // This makes the image cover the div without distorting its aspect ratio
-    object-position: center; // This centers the image within the div
+    object-fit: cover; 
+    object-position: center;
   }
 `;
 
@@ -129,12 +152,13 @@ const SocialMediaIcons = styled.div`
   gap: 10px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: rgba(217, 217, 217, 0.7);
   padding: 6px 10px;
-  border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 19px;
+  border-top-left-radius: 10px;
   & a {
     text-decoration: none;
-    color: white;
+    color: ${COLORS.black};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -155,17 +179,17 @@ const TopContainer = styled.div`
   flex-direction: row;
   gap: 15px;
   margin-top: 25px;
-  align-items: stretch; // Ensure the children of this container stretch to fill the container's height
+  align-items: stretch;
 `;
 
 const ProfilePicture = styled.div`
-  flex-shrink: 0; // Prevent the profile picture from shrinking
-  width: 200px; // Fixed width for the profile picture
-  height: 200px; // Fixed height to ensure consistency
+  flex-shrink: 0; 
+  width: 200px; 
+  height: 200px; 
   & img {
     width: 100%;
-    height: 100%; // Make sure the image covers the full size of the container
-    object-fit: cover; // Adjust this as needed to maintain the aspect ratio of your images
+    height: 100%; 
+    object-fit: cover; 
     border-radius: 10px;
   }
 `;
@@ -173,27 +197,30 @@ const ProfilePicture = styled.div`
 
 
 const InfoContainer = styled.div`
-  display: flex; // Use flexbox to align items side by side
-  justify-content: space-between; // Space between user info and action buttons
+  display: flex; 
+  justify-content: space-between; 
   flex-grow: 1;
-  background: #222628;
+  background: ${COLORS.white};
+  border: 1px solid ${COLORS.secondary};
   border-radius: 10px;
   padding: 15px;
-  gap: 20px; // Add some space between the two sections
+  gap: 20px; 
 `;
 
 const UserInfo = styled.div`
   & h2 {
     font-size: 29px;
     margin: 0;
+    color: ${COLORS.black};
   }
   & span {
     font-size: 16px;
     font-weight: 500;
-    opacity: 0.5;
+    color: ${COLORS.secondary};
   }
   & p {
     margin-top: 15px;
+    color: ${COLORS.black};
   }
 `;
 
