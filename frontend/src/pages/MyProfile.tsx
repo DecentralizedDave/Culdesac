@@ -11,6 +11,7 @@ import { COLORS } from "../shared/constants/colors";
 // components
 import MainContainer from "../shared/components/MainContainer";
 import EditProfileModal from "../shared/components/editProfile";
+import {Messageboard} from "../shared/components/Profile/AboutMe";
 import PoapList from "../shared/components/Cabinets/PoapList";
 
 // Cabinet Components
@@ -146,6 +147,7 @@ const MyProfile = () => {
             </UserInfo>
           </InfoContainer>
         </TopContainer>
+        <Messageboard aboutme={userData.aboutme || "Nothing here yet"} interests={userData.interests || "Nothing here yet"} />
         {userData && <PoapList address={userData.address} />}
         
         {/* // Cabinets */}
@@ -222,15 +224,6 @@ const SocialMediaIcons = styled.div`
   }
 `;
 
-// const RoofOverlay = styled.img`
-//   position: absolute;
-//   top: 100px; // Adjust this value as needed to get the desired overlap effect
-//   left: 50%;
-//   transform: translateX(-50%);
-//   max-width: 850px; // Adjust width as needed
-//   z-index: 20; // Ensure this is above the BannerDiv but consider other elements
-// `;
-
 const TopContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -279,27 +272,6 @@ const UserInfo = styled.div`
     color: ${COLORS.black};
   }
 `;
-
-// const ActionButtons = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   justify-content: center;
-//   gap: 10px;
-// `;
-
-// const ActionButton = styled.button`
-//   background: none;
-//   border: none;
-//   color: white;
-//   cursor: pointer;
-//   text-decoration: underline;
-//   padding: 0;
-//   &:hover {
-//     opacity: 0.8;
-//   }
-// `;
-
 
 const Mood = styled.span`
   color: ${COLORS.success} !important;

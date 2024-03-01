@@ -7,7 +7,7 @@ import { Navbar } from "./pages/components/Navbar";
 
 import { PageRoutes } from "./pages";
 
-// This is your main App component that sets up providers
+
 function App() {
   return (
     <Router>

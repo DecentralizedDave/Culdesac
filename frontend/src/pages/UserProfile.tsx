@@ -17,6 +17,7 @@ import FavoriteNftCabinet from "../shared/components/Cabinets/favoriteNftCabinet
 import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet";
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
+import GossipCabinet from "../shared/components/Cabinets/GossipCabinet";
 
 // icons
 import { X, Telegram, Instagram } from "@mui/icons-material";
@@ -122,6 +123,9 @@ const UserProfile = () => {
           </ActionButtons>
         </InfoContainer>
       </TopContainer>
+      {userData.hiddenComments && (
+        <GossipCabinet address={userData.address} />
+      )}
       {userData && <PoapList address={userData.address} />}
       {userData.favNftCabinet && (
         <FavoriteNftCabinet address={userData.address} />

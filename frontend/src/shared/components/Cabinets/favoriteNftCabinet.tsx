@@ -4,7 +4,7 @@ import MainContainer from "../MainContainer";
 import { COLORS } from "../../../shared/constants/colors";
 
 interface FavoriteNftCabinetProps {
-    address: string; // Define the type for the address prop
+    address: string; 
 }
 
 function FavoriteNftCabinet({ address }: FavoriteNftCabinetProps) {
