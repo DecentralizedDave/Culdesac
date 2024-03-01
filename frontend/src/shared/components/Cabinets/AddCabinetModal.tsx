@@ -33,7 +33,7 @@ const AddCabinetModal: React.FC<AddCabinetModalProps> = ({
         <h2>Add a Cabinet</h2>
         <ButtonDiv>
           <button onClick={() => addCabinet("favNftCabinet")}>
-            <Palette style={{ marginRight: "5px" }}/> Favorite NFT
+            <Palette style={{ marginRight: "5px" }}/> Top 5 NFTs
           </button>
           <button onClick={() => addCabinet("favCommunityCabinet")}>
             <Public style={{ marginRight: "5px" }}/> Favorite Community

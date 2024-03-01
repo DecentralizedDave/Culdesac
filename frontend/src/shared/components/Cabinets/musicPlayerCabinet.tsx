@@ -16,11 +16,10 @@ function MusicPlayerCabinet({ address }: MusicPlayerCabinetProps) {
           <h3>Music Player</h3>
         </SubContainer>
         <MusicPlayerContainer>
-          <Heading>My Music</Heading>
           <PlayerControls>
             <SongInfo>
-              <Title>Digits</Title>
-              <Album>Yung Thug</Album>
+              <Title>Buidl</Title>
+              <Album>Eth Denver</Album>
               <SliderContainer>
                 <PlayButton aria-label="Play"></PlayButton>
                 <Time>3:25</Time>
@@ -28,7 +27,7 @@ function MusicPlayerCabinet({ address }: MusicPlayerCabinetProps) {
               </SliderContainer>
             </SongInfo>
             <AlbumArt
-              src="https://imgs.search.brave.com/Ef-u78edh_dK30SrekXhsEw6yjy3mw8TU-ydFWpD93I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMS5z/bmRjZG4uY29tL2Fy/dHdvcmtzLXNSTHhX/TGVhaktpaC0wLXQ1/MDB4NTAwLmpwZw"
+              src="https://i1.sndcdn.com/artworks-000118844886-67e5u7-t240x240.jpg"
               alt="Album Art"
             />
           </PlayerControls>
@@ -63,8 +62,7 @@ const SubContainer = styled.div`
 `;
 
 const MusicPlayerContainer = styled.div`
-  background: rgb(34, 38, 40);
-  color: white;
+  color: ${COLORS.black};
   padding: 15px;
   border-radius: 10px;
   width: 770px;
@@ -72,9 +70,6 @@ const MusicPlayerContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const Heading = styled.h2`
-  margin: 0 0 20px 0;
-`;
 
 const PlayerControls = styled.div`
   display: flex;
@@ -91,14 +86,14 @@ const PlayButton = styled.button`
   display: inline-block;
   width: 0;
   height: 0;
-  border-left: 20px solid white; /* Creates the right-pointing triangle */
-  border-top: 10px solid transparent; /* Top part of the triangle */
-  border-bottom: 10px solid transparent; /* Bottom part of the triangle */
+  border-left: 20px solid ${COLORS.black}; 
+  border-top: 10px solid transparent; 
+  border-bottom: 10px solid transparent; /
   &:focus {
     outline: none;
   }
   &:hover {
-    border-left: 20px solid #ddd; /* Slightly changes the color on hover */
+    border-left: 20px solid #ddd;
   }
 `;
 
@@ -127,20 +122,20 @@ const SliderContainer = styled.div`
 
 const Time = styled.div`
   align-self: flex-end;
-  margin-right: 60px;
+  margin-right: 10px;
+  color: ${COLORS.black};
   padding-bottom: 5px;
 `;
 
 const Slider = styled.input.attrs({ type: 'range' })`
   width: 100%;
-  /* Add custom styles for the slider */
 `;
 
 const AlbumArt = styled.img`
-  width: 200px;
-  height: 200px;
-  background-color: #ccc; // This will be the fallback color if the image fails to load
-  border-radius: 10px; // If you want rounded corners
-  object-fit: cover; // This will cover the area without stretching the image
+  width: 150px;
+  height: 150px;
+  background-color: #ccc; 
+  border-radius: 10px; 
+  object-fit: cover; 
   margin-left: 20px;
 `;

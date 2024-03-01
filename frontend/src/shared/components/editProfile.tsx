@@ -14,7 +14,9 @@ import {
   X,
   Telegram,
   Instagram,
-  Mood
+  Mood,
+  Interests,
+  Info
 } from "@mui/icons-material";
 
 interface ImagePreviewProps {
@@ -33,6 +35,8 @@ interface EditProfileModalProps {
     xusername?: string;
     instagramusername?: string;
     telegramusername?: string;
+    aboutme?: string;
+    interests?: string;
     mood?: string;
   };
 }
@@ -61,7 +65,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   );
   const [xUsername, setxUsername] = useState(userData.xusername || "");
   const [myBio, setmyBio] = useState(userData.bio || "");
-  const [myMood, setmyMood] = useState(userData.bio || "");
+  const [myMood, setmyMood] = useState(userData.mood || "");
+  const [myAboutMe, setMyAboutMe] = useState(userData.aboutme || "");
+  const [myInterests, setMyInterests] = useState(userData.interests || "");
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -105,7 +111,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             xusername: xUsername,
             instagramusername: instagramUsername,
             telegramusername: telegramUsername,
-            mood: myMood
+            mood: myMood,
+            aboutme: myAboutMe,
+            interests: myInterests
           },
           { merge: true }
         );
@@ -230,6 +238,26 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 onChange={(e) => setmyMood(e.target.value)}
                 placeholder="Mood"
                 maxLength={10}
+              />
+            </InputDiv>
+            <InputDiv>
+              <Info />
+              <input
+                type="text"
+                value={myAboutMe}
+                onChange={(e) => setMyAboutMe(e.target.value)}
+                placeholder="About Me"
+                maxLength={300}
+              />
+            </InputDiv>
+            <InputDiv>
+              <Interests />
+              <input
+                type="text"
+                value={myInterests}
+                onChange={(e) => setMyInterests(e.target.value)}
+                placeholder="My Interests"
+                maxLength={200}
               />
             </InputDiv>
             <InputDiv>

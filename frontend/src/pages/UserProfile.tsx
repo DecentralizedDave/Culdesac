@@ -18,6 +18,7 @@ import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
 import GossipCabinet from "../shared/components/Cabinets/GossipCabinet";
+import { Messageboard } from "../shared/components/Profile/AboutMe";
 
 // icons
 import { X, Telegram, Instagram } from "@mui/icons-material";
@@ -123,6 +124,7 @@ const UserProfile = () => {
           </ActionButtons>
         </InfoContainer>
       </TopContainer>
+      <Messageboard aboutme={userData.aboutme || "Nothing here yet"} interests={userData.interests || "Nothing here yet"} />
       {userData.hiddenComments && (
         <GossipCabinet address={userData.address} />
       )}

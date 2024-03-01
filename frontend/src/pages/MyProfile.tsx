@@ -21,6 +21,7 @@ import FavoriteNftCabinet from "../shared/components/Cabinets/favoriteNftCabinet
 import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet";
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
+import WarpCastCabinet from "../shared/components/Cabinets/warpcastCabinet";
 
 import { X, Telegram, Instagram } from "@mui/icons-material";
 
@@ -151,6 +152,7 @@ const MyProfile = () => {
         {userData && <PoapList address={userData.address} />}
         
         {/* // Cabinets */}
+        {userData.warpcastCabinet && <WarpCastCabinet address={userData.address} />}
         {userData.favNftCabinet && <FavoriteNftCabinet address={userData.address} />}
         {userData.blogCabinet && <UserBlogCabinet address={userData.address} />}
         {userData.musicPlayer && <MusicPlayerCabinet address={userData.address} />}

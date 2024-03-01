@@ -117,7 +117,7 @@ const SectionText = styled.p`
 `;
 
 const UserProfileContainer = styled.div`
-    background-color: ${COLORS.buttons.secondary};
+  background-color: ${COLORS.secondary};
   display: flex;
   align-items: center;
   box-sizing: border-box;
