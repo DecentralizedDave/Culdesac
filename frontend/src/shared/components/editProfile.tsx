@@ -4,6 +4,7 @@ import { doc, setDoc } from "firebase/firestore";
 import db from "../../data/firebase/firebaseConfig";
 import Moralis from "moralis";
 import { initializeMoralis } from "../../utils/initializeMoralis";
+import { useAccount } from "wagmi";
 import { COLORS } from "../../shared/constants/colors";
 
 import {
@@ -69,6 +70,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   const [myAboutMe, setMyAboutMe] = useState(userData.aboutme || "");
   const [myInterests, setMyInterests] = useState(userData.interests || "");
 
+  const { address: userAddy } = useAccount();
+
   useEffect(() => {
     const fetchNFTs = async () => {
       if (
@@ -82,7 +85,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             chain: "0x1",
             format: "decimal",
             mediaItems: true,
-            address: address,
+            address: userAddy,
           });
           setNfts(response.result);
           console.log(response.result);
