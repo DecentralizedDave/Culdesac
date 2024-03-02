@@ -27,7 +27,7 @@ function LumaCabinet({ address }: LumaCabinetProps) {
               <button>View Event</button>
             </div>
             <img
-              src="https://pbs.twimg.com/profile_images/1691820221558829056/mvTXaDEN_400x400.jpg"
+              src="https://cdn.discordapp.com/attachments/1211095157181775954/1213321405504950382/AC3B15AE-761C-4504-A619-63A99CE69D10.jpg?ex=65f50c9d&is=65e2979d&hm=ae10ae46a7408a4c32297da1f9734ff35f1978a50f4b0087cdb3303a13d57f4c&"
               alt="community"
             />
           </CommunityDiv>

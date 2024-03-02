@@ -41,14 +41,13 @@ function PoapList({ address }: PoapListProps) {
     }
   }, [address]);
 
-  // Conditionally render nothing if there are no POAPs
   if (poaps.length === 0) return null;
 
   return (
     <MainContainer>
       <StyledContainer>
         <SubContainer>
-          <h3>POAPs</h3>
+          <h3>POAPs Collector</h3>
         </SubContainer>
         <PoapContainer>
           {poaps.map((poap, index) => (

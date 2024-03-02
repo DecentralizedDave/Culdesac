@@ -25,6 +25,7 @@ const config = defaultWagmiConfig({
   metadata,
 });
 
+
 createWeb3Modal({
   wagmiConfig: config,
   projectId,

@@ -6,6 +6,7 @@ import MainContainer from "../shared/components/MainContainer";
 import { X, Telegram, LocationOn, Explore, Games } from "@mui/icons-material";
 import WarpCastCabinet from "../shared/components/Cabinets/warpcastCabinet";
 import RafflesCabinet from "../shared/components/Cabinets/Games/RafflesCabinet";
+import RiddleCabinet from "../shared/components/Cabinets/Games/RiddleGame";
 
 interface TabProps {
   active: boolean;
@@ -54,7 +55,7 @@ export function CommunityProfile() {
             <ActionButton>Join Community</ActionButton>
             <ActionButton>Send Message</ActionButton>
             <ActionButton>Send a Gift</ActionButton>
-            <ActionButton>Report User</ActionButton>
+            <ActionButton>Report</ActionButton>
           </ActionButtons>
         </InfoContainer>
       </TopContainer>
@@ -63,13 +64,13 @@ export function CommunityProfile() {
           active={activeTab === "overview"}
           onClick={() => setActiveTab("overview")}
         >
-          <Explore style={{ marginRight: '5px' }}/> Overview
+          <Explore style={{ marginRight: "5px" }} /> Overview
         </Tab>
         <Tab
           active={activeTab === "games"}
           onClick={() => setActiveTab("games")}
         >
-          <Games style={{ marginRight: '5px' }}/> Games
+          <Games style={{ marginRight: "5px" }} /> Games
         </Tab>
       </TabsContainer>
       {activeTab === "overview" && (
@@ -83,9 +84,12 @@ export function CommunityProfile() {
           <WarpCastCabinet address="dummy_address" />
         </>
       )}
-      {activeTab === "games" && 
-      <RafflesCabinet/>
-      }
+      {activeTab === "games" && (
+        <>
+          <RafflesCabinet />
+          <RiddleCabinet />
+        </>
+      )}
     </MainContainer>
   );
 }
@@ -131,7 +135,7 @@ const TopContainer = styled.div`
   flex-direction: row;
   gap: 15px;
   margin-top: 25px;
-  align-items: stretch; 
+  align-items: stretch;
 `;
 
 const ProfilePicture = styled.div`

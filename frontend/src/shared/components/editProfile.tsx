@@ -16,7 +16,7 @@ import {
   Instagram,
   Mood,
   Interests,
-  Info
+  Info,
 } from "@mui/icons-material";
 
 interface ImagePreviewProps {
@@ -82,7 +82,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             chain: "0x1",
             format: "decimal",
             mediaItems: true,
-            address: "0x15E038B0Aa5B0b53c53a9F4c45f8A803f5E2AE2C",
+            address: address,
           });
           setNfts(response.result);
           console.log(response.result);
@@ -113,7 +113,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             telegramusername: telegramUsername,
             mood: myMood,
             aboutme: myAboutMe,
-            interests: myInterests
+            interests: myInterests,
           },
           { merge: true }
         );
@@ -168,35 +168,41 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               <ArrowBackIos />
             </BackButton>
             <h2>Select Your NFT</h2>
-            <NFTGrid>
-              {nfts
-                .filter(
-                  (nft) => nft.media?.originalMediaUrl && !nft.possibleScam
-                )
-                .map((nft, index) => {
-                  const imageUrl = convertIpfsUrl(nft.media?.originalMediaUrl);
+            {nfts.length > 0 ? (
+              <NFTGrid>
+                {nfts
+                  .filter(
+                    (nft) => nft.media?.originalMediaUrl && !nft.possibleScam
+                  )
+                  .map((nft, index) => {
+                    const imageUrl = convertIpfsUrl(
+                      nft.media?.originalMediaUrl
+                    );
 
-                  return (
-                    <NFTThumbnail
-                      key={index}
-                      onClick={() =>
-                        selectNFT(
-                          imageUrl,
-                          showProfileNFTSelection ? "profile" : "banner"
-                        )
-                      }
-                    >
-                      <img
-                        src={imageUrl}
-                        alt={`NFT ${index}`}
-                        onError={(e) =>
-                          (e.currentTarget.src = PlaceholderImage)
+                    return (
+                      <NFTThumbnail
+                        key={index}
+                        onClick={() =>
+                          selectNFT(
+                            imageUrl,
+                            showProfileNFTSelection ? "profile" : "banner"
+                          )
                         }
-                      />
-                    </NFTThumbnail>
-                  );
-                })}
-            </NFTGrid>
+                      >
+                        <img
+                          src={imageUrl}
+                          alt={`NFT ${index}`}
+                          onError={(e) =>
+                            (e.currentTarget.src = PlaceholderImage)
+                          }
+                        />
+                      </NFTThumbnail>
+                    );
+                  })}
+              </NFTGrid>
+            ) : (
+              <p style={{color: "black"}}>You don't own any NFTs.</p>
+            )}
           </>
         ) : (
           <EditDiv>
@@ -330,16 +336,16 @@ const ModalContent = styled.div`
 `;
 
 const CloseButton = styled.button`
-position: absolute;
-color: ${COLORS.black};
-top: 10px;
-right: 10px;
-background: transparent;
-border: none;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
+  position: absolute;
+  color: ${COLORS.black};
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
@@ -395,7 +401,7 @@ const ImagePreviewContainer = styled.div`
 
 const ImagePreview = styled.img<ImagePreviewProps>`
   width: ${({ isBanner }) => (isBanner ? "150px" : "100px")};
-  height: ${({ isBanner }) => (isBanner ? "50px" : "100px")}; 
+  height: ${({ isBanner }) => (isBanner ? "50px" : "100px")};
   object-fit: cover;
   border-radius: 10px;
 `;
@@ -424,6 +430,7 @@ const BackButton = styled.button`
   border: none;
   display: flex;
   justify-content: center;
+  color: ${COLORS.black};
   align-items: center;
   cursor: pointer;
 `;
