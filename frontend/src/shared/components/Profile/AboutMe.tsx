@@ -3,9 +3,9 @@ import MainContainer from "../MainContainer";
 import { COLORS } from "../../constants";
 
 const users = [
-  { id: 1, imgSrc: "https://images.mcpepes.com/7f7b00fa478aaaf5a16803563d87fd9d59e6db41f158e3547397780af9b60d40.gif", name: "dave" },
-  { id: 2, imgSrc: "https://images.mcpepes.com/7f7b00fa478aaaf5a16803563d87fd9d59e6db41f158e3547397780af9b60d40.gif", name: "clay" },
-  { id: 3, imgSrc: "https://images.mcpepes.com/7f7b00fa478aaaf5a16803563d87fd9d59e6db41f158e3547397780af9b60d40.gif", name: "matt" },
+  { id: 1, imgSrc: "https://images.mcpepes.com/7f7b00fa478aaaf5a16803563d87fd9d59e6db41f158e3547397780af9b60d40.gif", name: "davis" },
+  { id: 2, imgSrc: "https://i.imgur.com/PFYY60M.png", name: "david" },
+  { id: 3, imgSrc: "https://cloudflare-ipfs.com/ipfs/QmVwzwR85c6GKKuzFjVMzchxwCxJoVxNv9UVaz9YbQC7en", name: "halfblood..." },
 ];
 
 interface MessageboardProps {
@@ -121,7 +121,7 @@ const UserProfileContainer = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 5px 10px 5px 10px;
+  padding: 8px 10px 8px 10px;
   margin-bottom: 10px;
   border-radius: 5px;
 `;
@@ -136,6 +136,7 @@ const UserImage = styled.img`
 
 const UserName = styled.span`
   font-size: 14px;
+  font-weight: 500;
   font-weight: normal;
   color: ${COLORS.black};
 `;

@@ -39,16 +39,32 @@ function GossipCabinet({ address }: GossipCabinetProps) {
             <CommentSection>
               <UserPicture>
                 <img
-                  src="https://images.mcpepes.com/7f7b00fa478aaaf5a16803563d87fd9d59e6db41f158e3547397780af9b60d40.gif"
+                  src="https://i.imgur.com/PFYY60M.png"
                   alt="Close Friend"
                 />
               </UserPicture>
               <UserComment>
                 <div>
-                  <h4>Dave</h4>
+                  <h4>david</h4>
                   <span>2 min ago</span>
                 </div>
-                <p>This guy is pretty sick!</p>
+                <p>Really great community manager.</p>
+                <button>reply</button>
+              </UserComment>
+            </CommentSection>
+            <CommentSection>
+              <UserPicture>
+                <img
+                  src="https://cloudflare-ipfs.com/ipfs/QmVwzwR85c6GKKuzFjVMzchxwCxJoVxNv9UVaz9YbQC7en"
+                  alt="Close Friend"
+                />
+              </UserPicture>
+              <UserComment>
+                <div>
+                  <h4>halfbloodhorror</h4>
+                  <span>45 min ago</span>
+                </div>
+                <p>drank all my fireball</p>
                 <button>reply</button>
               </UserComment>
             </CommentSection>
