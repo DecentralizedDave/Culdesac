@@ -4,7 +4,7 @@ import { doc, setDoc } from "firebase/firestore";
 import db from "../../../data/firebase/firebaseConfig";
 import { COLORS } from "../../../shared/constants/colors";
 
-import { Close, Palette, Public, GraphicEq, Book } from "@mui/icons-material";
+import { Close, Palette, Public, GraphicEq, Book, Celebration, Fort } from "@mui/icons-material";
 
 interface AddCabinetModalProps {
   userId: string;
@@ -32,6 +32,9 @@ const AddCabinetModal: React.FC<AddCabinetModalProps> = ({
         </CloseButton>
         <h2>Add a Cabinet</h2>
         <ButtonDiv>
+          <button onClick={() => addCabinet("lumaCabinet")}>
+            <Celebration style={{ marginRight: "5px" }}/> IRL Event
+          </button>
           <button onClick={() => addCabinet("favNftCabinet")}>
             <Palette style={{ marginRight: "5px" }}/> Top 5 NFTs
           </button>
@@ -45,7 +48,7 @@ const AddCabinetModal: React.FC<AddCabinetModalProps> = ({
             <Book style={{ marginRight: "5px" }}/> Blog
           </button>
           <button onClick={() => addCabinet("warpcastCabinet")}>
-            <Book style={{ marginRight: "5px" }}/> Warpcast Feed
+            <Fort style={{ marginRight: "5px" }}/> Warpcast Feed
           </button>
         </ButtonDiv>
       </ModalContent>

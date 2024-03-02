@@ -37,6 +37,7 @@ const UsernameModal: React.FC<UsernameModalProps> = ({
           blogCabinet: false,
           hiddenComments: false,
           warpcastCabinet: false,
+          lumaCabinet: false,
           aboutme: "",
           interests: "",
           mood: "",

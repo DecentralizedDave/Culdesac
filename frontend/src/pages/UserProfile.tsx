@@ -18,6 +18,7 @@ import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
 import GossipCabinet from "../shared/components/Cabinets/GossipCabinet";
+import LumaCabinet from "../shared/components/Cabinets/LumaCabinet";
 import { Messageboard } from "../shared/components/Profile/AboutMe";
 
 // icons
@@ -129,6 +130,9 @@ const UserProfile = () => {
         <GossipCabinet address={userData.address} />
       )}
       {userData && <PoapList address={userData.address} />}
+      {userData.lumaCabinet && (
+        <LumaCabinet address={userData.address} />
+      )}
       {userData.favNftCabinet && (
         <FavoriteNftCabinet address={userData.address} />
       )}

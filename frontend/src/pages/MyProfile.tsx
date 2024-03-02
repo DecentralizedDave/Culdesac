@@ -11,7 +11,7 @@ import { COLORS } from "../shared/constants/colors";
 // components
 import MainContainer from "../shared/components/MainContainer";
 import EditProfileModal from "../shared/components/editProfile";
-import {Messageboard} from "../shared/components/Profile/AboutMe";
+import { Messageboard } from "../shared/components/Profile/AboutMe";
 import PoapList from "../shared/components/Cabinets/PoapList";
 
 // Cabinet Components
@@ -22,6 +22,7 @@ import MusicPlayerCabinet from "../shared/components/Cabinets/musicPlayerCabinet
 import FavCommunity from "../shared/components/Cabinets/favoriteCommunityCabinet";
 import UserBlogCabinet from "../shared/components/Cabinets/UserBlogCabinet";
 import WarpCastCabinet from "../shared/components/Cabinets/warpcastCabinet";
+import LumaCabinet from "../shared/components/Cabinets/LumaCabinet";
 
 import { X, Telegram, Instagram } from "@mui/icons-material";
 
@@ -35,7 +36,7 @@ const MyProfile = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      navigate("/"); 
+      navigate("/");
     } else if (address) {
       const fetchUserData = async () => {
         const docRef = doc(db, "userProfiles", address);
@@ -85,7 +86,11 @@ const MyProfile = () => {
           />
         )}
         {showAddCabinetModal && address && (
-          <AddCabinetModal userId={address} onClose={toggleAddCabinetModal}  onProfileUpdate={onProfileUpdate} />
+          <AddCabinetModal
+            userId={address}
+            onClose={toggleAddCabinetModal}
+            onProfileUpdate={onProfileUpdate}
+          />
         )}
         <BannerDiv>
           <img src={userData.bannerimg} alt="Banner" />
@@ -148,17 +153,28 @@ const MyProfile = () => {
             </UserInfo>
           </InfoContainer>
         </TopContainer>
-        <Messageboard aboutme={userData.aboutme || "Nothing here yet"} interests={userData.interests || "Nothing here yet"} />
+        <Messageboard
+          aboutme={userData.aboutme || "Nothing here yet"}
+          interests={userData.interests || "Nothing here yet"}
+        />
         {userData && <PoapList address={userData.address} />}
-        
-        {/* // Cabinets */}
-        {userData.warpcastCabinet && <WarpCastCabinet address={userData.address} />}
-        {userData.favNftCabinet && <FavoriteNftCabinet address={userData.address} />}
-        {userData.blogCabinet && <UserBlogCabinet address={userData.address} />}
-        {userData.musicPlayer && <MusicPlayerCabinet address={userData.address} />}
-        {userData.favCommunityCabinet && <FavCommunity address={userData.address} />}
-        <AddCabinet onAddCabinetClick={toggleAddCabinetModal} />
 
+        {/* // Cabinets */}
+        {userData.lumaCabinet && <LumaCabinet address={userData.address} />}
+        {userData.warpcastCabinet && (
+          <WarpCastCabinet address={userData.address} />
+        )}
+        {userData.favNftCabinet && (
+          <FavoriteNftCabinet address={userData.address} />
+        )}
+        {userData.blogCabinet && <UserBlogCabinet address={userData.address} />}
+        {userData.musicPlayer && (
+          <MusicPlayerCabinet address={userData.address} />
+        )}
+        {userData.favCommunityCabinet && (
+          <FavCommunity address={userData.address} />
+        )}
+        <AddCabinet onAddCabinetClick={toggleAddCabinetModal} />
       </MainContainer>
       <ToastContainer position="bottom-right" />
     </>
@@ -278,4 +294,4 @@ const UserInfo = styled.div`
 const Mood = styled.span`
   color: ${COLORS.success} !important;
   font-weight: 600 !important;
-`
+`;
