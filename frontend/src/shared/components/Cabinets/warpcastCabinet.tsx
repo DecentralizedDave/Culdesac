@@ -5,17 +5,14 @@ import { COLORS } from "../../../shared/constants/colors";
 import { FarcasterEmbed } from "react-farcaster-embed";
 import "react-farcaster-embed/dist/styles.css";
 
-interface WarpCastCabinetProps {
-  address: string;
-}
 
-function WarpCastCabinet({ address }: WarpCastCabinetProps) {
+function WarpCastCabinet() {
   const [embedContent, setEmbedContent] = useState<React.ReactNode | null>(null);
 
   useEffect(() => {
     async function fetchEmbed() {
       try {
-        const content = await FarcasterEmbed({ url: "https://warpcast.com/vitalik.eth/0xbbdd986e" });
+        const content = await FarcasterEmbed({ url: "https://warpcast.com/ethdenver/0x9bc56c32" });
         setEmbedContent(content);
       } catch (error) {
         console.error("Failed to load Farcaster embed:", error);
@@ -24,7 +21,7 @@ function WarpCastCabinet({ address }: WarpCastCabinetProps) {
     }
 
     fetchEmbed();
-  }, [address]); 
+  }); 
 
   return (
     <MainContainer>

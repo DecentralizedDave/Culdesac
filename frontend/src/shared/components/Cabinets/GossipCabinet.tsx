@@ -10,6 +10,7 @@ interface GossipCabinetProps {
 }
 
 function GossipCabinet({ address }: GossipCabinetProps) {
+  console.log(address)
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen(!isOpen);

@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import MainContainer from "../MainContainer";
 import { COLORS } from "../../../shared/constants/colors";
 
 interface FavCommunityProps {
-  address: string; // Define the type for the address prop
+  address: string; 
 }
 
 function FavCommunity({ address }: FavCommunityProps) {
@@ -22,7 +23,9 @@ function FavCommunity({ address }: FavCommunityProps) {
             <div>
               <h4>Eth Denver 🏔🦬🦄</h4>
               <p>A community #BUIDLing the decentralized future.</p>
+              <PageLink to="/community/ethdenver">
               <button>View Community</button>
+              </PageLink>
             </div>
           </CommunityDiv>
         </SubContainer>
@@ -102,3 +105,8 @@ const CommunityDiv = styled.div`
     }
   }
 `;
+
+const PageLink = styled(Link)`
+  text-decoration: none;
+`
+
