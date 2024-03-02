@@ -69,7 +69,7 @@ export function CommunityProfile() {
           active={activeTab === "games"}
           onClick={() => setActiveTab("games")}
         >
-          <Games style={{ marginRight: '5px' }}/> Park
+          <Games style={{ marginRight: '5px' }}/> Games
         </Tab>
       </TabsContainer>
       {activeTab === "overview" && (
@@ -80,7 +80,7 @@ export function CommunityProfile() {
             </SubContainer>
             <OverviewContainer></OverviewContainer>
           </StyledContainer>
-          <WarpCastCabinet/>
+          <WarpCastCabinet address="dummy_address" />
         </>
       )}
       {activeTab === "games" && 

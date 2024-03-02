@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { useScrollToTop } from "../shared/Hooks/scrollToTop";
 
 // routes
 import { ROUTES } from "./routes";
@@ -10,6 +11,7 @@ import MyProfile from "./MyProfile";
 import UserProfile from "./UserProfile";
 
 export function PageRoutes() {
+    useScrollToTop();
     return (
         <>
         <Routes>

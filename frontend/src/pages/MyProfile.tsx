@@ -35,7 +35,7 @@ const MyProfile = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      navigate("/"); // Redirect if not connected
+      navigate("/"); 
     } else if (address) {
       const fetchUserData = async () => {
         const docRef = doc(db, "userProfiles", address);

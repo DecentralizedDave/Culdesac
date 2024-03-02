@@ -5,8 +5,11 @@ import { COLORS } from "../../../shared/constants/colors";
 import { FarcasterEmbed } from "react-farcaster-embed";
 import "react-farcaster-embed/dist/styles.css";
 
+interface WarpCastCabinetProps {
+  address: string;
+}
 
-function WarpCastCabinet() {
+function WarpCastCabinet({ address }: WarpCastCabinetProps) {
   const [embedContent, setEmbedContent] = useState<React.ReactNode | null>(null);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ function WarpCastCabinet() {
     }
 
     fetchEmbed();
-  }); 
+  }, [address]); 
 
   return (
     <MainContainer>

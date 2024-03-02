@@ -44,6 +44,9 @@ const AddCabinetModal: React.FC<AddCabinetModalProps> = ({
           <button onClick={() => addCabinet("blogCabinet")}>
             <Book style={{ marginRight: "5px" }}/> Blog
           </button>
+          <button onClick={() => addCabinet("warpcastCabinet")}>
+            <Book style={{ marginRight: "5px" }}/> Warpcast Feed
+          </button>
         </ButtonDiv>
       </ModalContent>
     </ModalOverlay>
