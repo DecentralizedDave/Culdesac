@@ -79,7 +79,11 @@ export function CommunityProfile() {
             <SubContainer>
               <h3>About</h3>
             </SubContainer>
-            <OverviewContainer></OverviewContainer>
+            <OverviewContainer>
+              ETHDenver is the largest Web3 #BUIDLathon in the world (fka
+              hackathon) for Ethereum and other blockchain protocol enthusiasts,
+              designers and developers.
+            </OverviewContainer>
           </StyledContainer>
           <WarpCastCabinet address="dummy_address" />
         </>
