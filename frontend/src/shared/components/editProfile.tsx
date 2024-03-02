@@ -75,7 +75,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   useEffect(() => {
     const fetchNFTs = async () => {
       if (
-        address &&
+        userAddy &&
         isOpen &&
         (showProfileNFTSelection || showBannerNFTSelection)
       ) {
